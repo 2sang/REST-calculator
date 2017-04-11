@@ -15,16 +15,18 @@ import org.json.simple.JSONObject;
 public class Info {
     
 	
-	private String teamId;
-	private String now;
-    private String result;
+	private int teamId;
+	private long now;
+    private double result;
+    
+    public JSONObject data;
     
     
     public Info(String args){
-    	JSONObject data = new JSONObject();
-     
-    	data.put(teamId, "9");
-    	data.put(now, String.valueOf(System.currentTimeMillis()));
+    	data = new JSONObject();
+    	data.put(teamId, 9);
+    	data.put(now, System.currentTimeMillis());
     	data.put(result, RPNCalculator.calculateExpression(args));
+    	
     }
 }

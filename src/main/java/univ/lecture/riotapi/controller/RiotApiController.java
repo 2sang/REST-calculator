@@ -1,5 +1,6 @@
 package univ.lecture.riotapi.controller;
 
+import univ.lecture.riotapi.model.*;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +39,7 @@ public class RiotApiController {
 			conn.setRequestMethod("POST");
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
-			osw.write(json.toString());
+			osw.write(jsonObject.toString());
 			osw.flush();
 			BufferedReader br;
 			br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -68,9 +69,11 @@ public class RiotApiController {
     public String queryExpression(@PathVariable("exp") String expression) throws UnsupportedEncodingException {
 		System.out.println("expression is : "+expression);
 		
-		this.sendResult(new JSONObject());
+		Info info = new Info(expression);
 		
-
-        return "SUCCESS!!";
+		//this.sendResult(new JSONObject());
+		this.sendResult(info.data);
+		
+		return "SUCCESS!!";
     }
 }
