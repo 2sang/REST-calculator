@@ -36,7 +36,8 @@ public class RiotApiController {
 	}
 
 	@RequestMapping(value="/calc/{exp}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public info queryExpression(@PathVariable("exp") String expression) throws UnsupportedEncodingException {
+    public int queryExpression(@PathVariable("exp") String expression) throws UnsupportedEncodingException {
+		
 		try{
 			URL url = new URL(targetEndPoint);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();

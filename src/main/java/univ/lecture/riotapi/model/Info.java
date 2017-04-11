@@ -1,9 +1,10 @@
 package univ.lecture.riotapi.model;
 
-import net.minidev.json.JSONObject;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.json.simple.JSONObject;
 
 /**
  * Created by tchi on 2017. 4. 1..
