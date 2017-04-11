@@ -14,19 +14,13 @@ import org.json.simple.JSONObject;
 @AllArgsConstructor
 public class Info {
     
-	
-	private int teamId;
-	private long now;
-    private double result;
-    
     public JSONObject data;
     
-    
-    public Info(String args){
+    public Info(String expression){
     	data = new JSONObject();
-    	data.put(teamId, 9);
-    	data.put(now, System.currentTimeMillis());
-    	data.put(result, RPNCalculator.calculateExpression(args));
+    	data.put("teamId", 9);
+    	data.put("now", System.currentTimeMillis());
+    	data.put("result", RPNCalculator.calculateExpression(expression));
     	
     }
 }
