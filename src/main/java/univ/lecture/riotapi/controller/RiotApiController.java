@@ -30,37 +30,34 @@ public class RiotApiController {
 	@Value("${target.endpoint}")
 	private String targetEndPoint;
 	
-	private void sendResult(JSONObject jsonObject){
-		
-
-	}
-
-	@RequestMapping(value="/calc/{exp}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public int queryExpression(@PathVariable("exp") String expression) throws UnsupportedEncodingException {
-		System.out.println("expression is : "+expression);
-		
+	private void sendResult(JSONObject jsonObject) throws UnsupportedEncodingException{
 		try{
 			URL url = new URL(targetEndPoint);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
+			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
-			String param = "{\"title\":\"sdsd\",\"body\":\"dsfdf\"}";
-		OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+			// only for testing
+			JSONObject json = new JSONObject();
+			json.put("teamid", "1");
+			json.put("time", "120312312");
+			json.put("result", "13.0");
 
-			osw.write(param);
+			osw.write(json.toString());
 			osw.flush();
-
-			BufferedReader br = null;
+			BufferedReader br;
 			br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-
+			StringBuilder stringBuilder = new StringBuilder();
 			String line = null;
 			while((line = br.readLine()) != null){
-				System.out.println(line);
+				stringBuilder.append(line+"\n");
 			}
+			System.out.println(""+stringBuilder.toString());
 
 			osw.close();
 			br.close();
+
 		}catch(MalformedURLException e){
 			e.printStackTrace();
 		}catch(ProtocolException e){
@@ -71,6 +68,15 @@ public class RiotApiController {
 			e.printStackTrace();
 		}
 
-        return 1;
+	}
+
+	@RequestMapping(value="/calc/{exp}", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String queryExpression(@PathVariable("exp") String expression) throws UnsupportedEncodingException {
+		System.out.println("expression is : "+expression);
+		
+		this.sendResult(new JSONObject());
+		
+
+        return "SUCCESS!!";
     }
 }
