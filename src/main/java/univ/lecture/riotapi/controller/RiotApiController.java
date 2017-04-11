@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.json.simple.JSONObject;
 import univ.lecture.riotapi.model.RPNCalculator;
@@ -38,7 +40,7 @@ public class RiotApiController {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-
+			
 			osw.write(jsonObject.toString());
 			osw.flush();
 			BufferedReader br;
@@ -65,12 +67,18 @@ public class RiotApiController {
 
 	}
 
-	@RequestMapping(value="/calc/{exp}", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String queryExpression(@PathVariable("exp") String expression) throws UnsupportedEncodingException {
-		System.out.println("received expression is : "+expression);
+	@RequestMapping(value="/calc", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+    public String queryExpression(@RequestBody String data) throws UnsupportedEncodingException {
+		System.out.println("received expression is : "+data);
+		String expression = URLDecoder.decode(data, "utf-8");
+		expression = expression.substring(0, expression.length()-1);
+
 		Info info = new Info(expression);
 		this.sendResult(info.data);
-    	double tempResult = RPNCalculator.calculateExpression(expression)
-		return String.valueof(tempResult);
+		System.out.println("info.data is : "+info.data);
+
+    	double tempResult = RPNCalculator.calculateExpression(expression);
+		return String.valueOf(tempResult);
     }
 }
