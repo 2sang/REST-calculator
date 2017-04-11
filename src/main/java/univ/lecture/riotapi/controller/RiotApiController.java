@@ -78,6 +78,6 @@ public class RiotApiController {
 		this.sendResult(info.data);
 
     	double tempResult = RPNCalculator.calculateExpression(expression);
-		return "[DEBUG] result : " + String.valueOf(tempResult) + "is POSTed to endpoint";
+		return "[DEBUG] result: " + String.valueOf(tempResult) + " is POSTed to endpoint";
     }
 }
