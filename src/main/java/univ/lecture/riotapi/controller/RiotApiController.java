@@ -70,13 +70,12 @@ public class RiotApiController {
 	@RequestMapping(value="/calc", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
     public String queryExpression(@RequestBody String data) throws UnsupportedEncodingException {
-		System.out.println("received expression is : "+data);
+		System.out.println("received expression was : " + data);
 		String expression = URLDecoder.decode(data, "utf-8");
 		expression = expression.substring(0, expression.length()-1);
 
 		Info info = new Info(expression);
 		this.sendResult(info.data);
-		System.out.println("info.data is : "+info.data);
 
     	double tempResult = RPNCalculator.calculateExpression(expression);
 		return String.valueOf(tempResult);
