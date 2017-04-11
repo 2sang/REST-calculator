@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.json.simple.JSONObject;
 import univ.lecture.riotapi.model.RPNCalculator;
 
 import java.io.*;
@@ -20,9 +20,6 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 @Log4j
 public class RiotApiController {
-	private static final String template = "%s is %f";
-    @Autowired
-    private RestTemplate restTemplate;
 
     @Value("${riot.api.endpoint}")
     private String riotApiEndpoint;
@@ -40,7 +37,6 @@ public class RiotApiController {
 
 	@RequestMapping(value="/calc/{exp}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public info queryExpression(@PathVariable("exp") String expression) throws UnsupportedEncodingException {
-		
 		try{
 			URL url = new URL(targetEndPoint);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -73,6 +69,6 @@ public class RiotApiController {
 			e.printStackTrace();
 		}
 
-        return summoner;
+        return 1;
     }
 }
