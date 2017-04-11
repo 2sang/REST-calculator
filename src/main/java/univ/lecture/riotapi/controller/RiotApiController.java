@@ -38,12 +38,6 @@ public class RiotApiController {
 			conn.setRequestMethod("POST");
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
-			// only for testing
-			JSONObject json = new JSONObject();
-			json.put("teamid", "1");
-			json.put("time", "120312312");
-			json.put("result", "13.0");
-
 			osw.write(json.toString());
 			osw.flush();
 			BufferedReader br;
